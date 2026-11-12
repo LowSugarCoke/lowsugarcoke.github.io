@@ -1,0 +1,18 @@
+{
+  "name": "Marine-OS · 100m 海岸樣區海廢視覺量化與淨灘調度系統",
+  "short_name": "Marine-OS",
+  "description": "Swiss Bathymetric Atlas & Coastal Field Log for 100m coastal transect debris quantification and bounded cleanup dispatch.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#F6F9FC",
+  "theme_color": "#0A2239",
+  "lang": "zh-TW",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
