@@ -1,5 +1,5 @@
 const CACHE_NAME = 'marine-os-shell-v5';
-const PRECACHE = ['./', './index.html', "./assets/clipWorker-wzh5Hi5Q.js", "./assets/index-DDIWhB4O.js", "./assets/index-fagfuwWz.css", "./assets/transformers.web-Br84DjOd.js"];
+const PRECACHE = ['./', './index.html', "./assets/clipWorker-wzh5Hi5Q.js", "./assets/index-DmVMasB1.js", "./assets/index-fagfuwWz.css", "./assets/transformers.web-Br84DjOd.js"];
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(PRECACHE)).then(() => self.skipWaiting()));
 });
