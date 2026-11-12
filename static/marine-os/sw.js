@@ -1,5 +1,5 @@
-const CACHE_NAME = 'marine-os-shell-v4';
-const PRECACHE = ['./', './index.html', "./assets/index-BVlk8I4P.js", "./assets/index-fagfuwWz.css", "./assets/transformers.web-Br84DjOd.js"];
+const CACHE_NAME = 'marine-os-shell-v5';
+const PRECACHE = ['./', './index.html', "./assets/clipWorker-wzh5Hi5Q.js", "./assets/index-DDIWhB4O.js", "./assets/index-fagfuwWz.css", "./assets/transformers.web-Br84DjOd.js"];
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(PRECACHE)).then(() => self.skipWaiting()));
 });
@@ -9,14 +9,20 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
   const url = new URL(event.request.url);
-  if (url.origin !== self.location.origin && !url.hostname.includes('jsdelivr.net')) return;
+  const allowedOrigin =
+    url.origin === self.location.origin ||
+    url.hostname.includes('jsdelivr.net') ||
+    url.hostname.includes('huggingface.co') ||
+    url.hostname.includes('hf.co');
+  if (!allowedOrigin) return;
+  const targetCache = url.hostname.includes('huggingface.co') || url.hostname.includes('hf.co') ? 'transformers-cache' : CACHE_NAME;
   event.respondWith(
     caches.match(event.request).then((cached) => {
       if (cached) return cached;
       return fetch(event.request).then((res) => {
         if (res && (res.status === 200 || res.type === 'opaque')) {
           const copy = res.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy)).catch(() => {});
+          caches.open(targetCache).then((cache) => cache.put(event.request, copy)).catch(() => {});
         }
         return res;
       }).catch(() => cached || (event.request.mode === 'navigate' ? caches.match('./index.html') : Response.error()));
